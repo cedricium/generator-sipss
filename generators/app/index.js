@@ -1,7 +1,9 @@
 const Generator = require('yeoman-generator');
+const yosay = require('yosay');
 
 module.exports = class extends Generator {
   initializing() {
+    this._welcomeMessage();
     this.props = {};
     // set project key equal to package.json
     this.props.project = this._readPackageJSON(this.destinationPath('package.json'));
@@ -52,6 +54,10 @@ module.exports = class extends Generator {
     ${this.destinationRoot('docs')}\n`);
   }
 
+  _welcomeMessage() {
+    this.log(yosay('This generator probably isn\'t right for your needs. But that\'s none of my business.'));
+  }
+
   _readPackageJSON(file) {
     return this.fs.readJSON(file);
   }
@@ -59,7 +65,7 @@ module.exports = class extends Generator {
   _parseFeaturesList(answer) {
     return new Promise((resolve, reject) => {
       let features = [];
-      try { 
+      try {
         // Split features by newline, removing values that are "null"
         // refs: https://stackoverflow.com/a/2843625
         features = answer.split('\n').filter(val => val);
