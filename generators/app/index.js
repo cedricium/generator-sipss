@@ -13,28 +13,26 @@ module.exports = class extends Generator {
     return this.prompt([{
       type: 'input',
       name: 'title',
-      message: 'Project title:',
+      message: 'Title:',
       default: this.appname,
     }, {
       type: 'input',
       name: 'subtitle',
-      message: 'Project subtitle:',
+      message: 'Subtitle / catchphrase:',
       default: this.props.project.description,
     }, {
       type: 'editor',
       name: 'description',
-      message: 'Project description:',
-      default: 'amo-cli lets you easily browse and search for Mozilla add-ons (such as extensions, themes, etc.) right from your terminal.'
+      message: 'Description:',
     }, {
       type: 'editor',
       name: 'features',
-      message: 'Project features:',
-      default: `cool #1\ncool #2\ncool #3`,
+      message: 'Features:',
       filter: this._parseFeaturesList,
     }, {
       type: 'editor',
       name: 'links',
-      message: 'Project links:',
+      message: 'Relevant Links:',
       filter: this._parseLinksList
     }
   ]).then((answers) => {
@@ -49,7 +47,7 @@ module.exports = class extends Generator {
     // copy template dir to dest dir swapping out templates with prompt answers
     this.fs.copyTpl(
       this.templatePath(),
-      this.destinationPath('docs/index.html'),
+      this.destinationPath('docs'),
       this.props
     );
   }
