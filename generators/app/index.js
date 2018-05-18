@@ -31,7 +31,12 @@ module.exports = class extends Generator {
       message: 'Project features:',
       default: `cool #1\ncool #2\ncool #3`,
       filter: this._parseFeaturesList,
-    },
+    }, {
+      type: 'editor',
+      name: 'links',
+      message: 'Project links:',
+      filter: this._parseLinksList
+    }
   ]).then((answers) => {
     // assign answers to props object to be used later
     Object.keys(answers).forEach((val) => {
@@ -70,6 +75,23 @@ module.exports = class extends Generator {
         // refs: https://stackoverflow.com/a/2843625
         features = answer.split('\n').filter(val => val);
         resolve(features);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  _parseLinksList(answer) {
+    return new Promise((resolve, reject) => {
+      let parsedLinks = [];
+      try {
+        const linksArr = answer.split('\n').filter(val => val); // ==> Array ["github: https://github.com", "npm: https://npmjs.com"]
+        linksArr.forEach((link) => {
+          let splitLink = link.split(': '); // ==> Array ["github", "https://github.com"]
+          let linkObj = {name: splitLink[0], url: splitLink[1]}; // ==> Object { name: "github", url: "https://github.com" }
+          parsedLinks.push(linkObj);
+        });
+        resolve(parsedLinks);
       } catch (err) {
         reject(err);
       }

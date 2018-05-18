@@ -46,16 +46,17 @@
             <div class="features content">
               <strong>Features</strong> ✨
               <ul>
-                <% for (let i = 0; i < features.length; i++) { %>
-                  <li><%= features[i] %></li>
-                <% } %>
+                <% features.forEach((feature) => { %>
+                  <li><%= feature %></li>
+                <% }); %>
               </ul>
             </div>
             <div class="links content">
               <strong>Links</strong> 🔗
               <ul>
-                <li>GitHub: <a href="https://github.com/cedricium/should-i-cli">https://github.com/cedricium/should-i-cli</a></li>
-                <li>npm: <a href="https://www.npmjs.com/package/should-i-cli">https://www.npmjs.com/package/should-i-cli</a></li>
+                <% links.forEach((link) => { %>
+                  <li><%= link.name %>: <a href="<%= link.url %>"><%= link.url %></a></li>
+                <% }); %>
               </ul>
             </div>
           </div>
