@@ -1,4 +1,4 @@
-# generator-sipps
+# generator-sipss
 
 > Yeoman generator for scaffolding a SIde-Project Static Site (sipss).
 
