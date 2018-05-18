@@ -5,8 +5,8 @@ module.exports = class extends Generator {
   initializing() {
     this._welcomeMessage();
     this.props = {};
-    // set project key equal to package.json
-    this.props.project = this._readPackageJSON(this.destinationPath('package.json'));
+    // set pkg key equal to package.json
+    this.props.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
   }
 
   prompting() {
@@ -14,12 +14,12 @@ module.exports = class extends Generator {
       type: 'input',
       name: 'title',
       message: 'Title:',
-      default: this.appname,
+      default: this.props.pkg.name,
     }, {
       type: 'input',
       name: 'subtitle',
       message: 'Subtitle / catchphrase:',
-      default: this.props.project.description,
+      default: this.props.pkg.description,
     }, {
       type: 'editor',
       name: 'description',
@@ -59,10 +59,6 @@ module.exports = class extends Generator {
 
   _welcomeMessage() {
     this.log(yosay('This generator probably isn\'t right for your needs. But that\'s none of my business.'));
-  }
-
-  _readPackageJSON(file) {
-    return this.fs.readJSON(file);
   }
 
   _parseFeaturesList(answer) {
