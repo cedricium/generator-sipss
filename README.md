@@ -8,7 +8,7 @@
 
 ## Installation
 
-First you need install [yeoman](http://yeoman.io/).
+First you need to install [yeoman](http://yeoman.io/).
 
 ```sh
 npm install -g yo
