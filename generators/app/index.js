@@ -1,9 +1,25 @@
 const Generator = require('yeoman-generator');
+const chalk = require('chalk');
 const yosay = require('yosay');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    this.option('skip-welcome-message', {
+      description: 'Skips the welcome message',
+      type: Boolean
+    });
+
+    this.option('skip-exit-message', {
+      description: 'Skips the exit message',
+      type: Boolean
+    });
+  }
+
   initializing() {
-    this._welcomeMessage();
+    if (!this.options['skip-welcome-message'])
+      this._welcomeMessage();
     this.props = {};
     // set pkg key equal to package.json
     this.props.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
@@ -53,8 +69,13 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log(`\nYou're all set! Your project's static site can be found at:
-    ${this.destinationRoot('docs')}\n`);
+    const exitMessage = `
+You're all set! Your project's static site can be found at:
+  ${chalk.bold(this.destinationRoot('docs'))}
+    `;
+
+    if (!this.options['skip-exit-message'])
+      this.log(exitMessage);
   }
 
   _welcomeMessage() {
