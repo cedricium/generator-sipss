@@ -1,0 +1,16 @@
+{
+  "name": "generator-sipss",
+  "version": "1.0.0",
+  "description": "SIde Project Static Site generator.",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Cedric Amaya <amaya.cedric@gmail.com> (http://cedricamaya.me/)",
+  "license": "MIT",
+  "dependencies": {
+    "yeoman-generator": "^2.0.5"
+  }
+}
