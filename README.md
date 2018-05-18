@@ -2,7 +2,9 @@
 
 > Yeoman generator for scaffolding a SIde-Project Static Site (sipss).
 
-\<insert screenshot here>
+<p align="center">
+  <img src="./resources/screenshot.png" height="531">
+</p>
 
 ## Installation
 
