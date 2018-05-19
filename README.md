@@ -3,7 +3,7 @@
 > Yeoman generator for scaffolding a SIde-Project Static Site (sipss).
 
 <p align="center">
-  <img src="./resources/screenshot.png" height="531">
+  <img src="https://raw.githubusercontent.com/cedricium/generator-sipss/master/resources/screenshot.png" height="531">
 </p>
 
 ## Installation
