@@ -17,7 +17,7 @@ npm install -g yo
 Then install the sipss generator.
 
 ```sh
-npm install -g yo generator-sipss
+npm install -g generator-sipss
 ```
 
 ## Usage
