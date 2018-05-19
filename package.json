@@ -1,7 +1,7 @@
 {
   "name": "generator-sipss",
   "version": "1.0.0",
-  "description": "SIde Project Static Site generator.",
+  "description": "Yeoman generator for scaffolding side project static sites (sipss)",
   "scripts": {
     "lint": "eslint ."
   },
