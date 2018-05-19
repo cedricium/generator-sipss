@@ -1,0 +1,19 @@
+Description:
+  Creates a single page static site based on a GitHub project.
+
+Example:
+  yo sipss
+
+  This will create:
+    index.html:                 HTML page with ejs templates replaced by prompt answers
+
+    css/main.css:               Main CSS file associated with index.html
+    css/vendor/bulma.min.css:   Bulma v0.71 CSS file
+
+    js/index.js:                Main script used for interacting with index.html
+
+    res/favicon.ico:            Example favicon to be replaced by you
+    res/icon-256.png:           Small image used for social media (Twitter / Facebook) cards,
+                                  to be replaced by you
+    res/screenshot.png:         Main media to be displayed on right-half of site, to
+                                  be replaced by you

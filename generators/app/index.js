@@ -7,12 +7,12 @@ module.exports = class extends Generator {
     super(args, opts);
 
     this.option('skip-welcome-message', {
-      description: 'Skips the welcome message',
+      desc: 'Skips the welcome message',
       type: Boolean,
     });
 
     this.option('skip-exit-message', {
-      description: 'Skips the exit message',
+      desc: 'Skips the exit message',
       type: Boolean,
     });
   }
@@ -42,15 +42,28 @@ module.exports = class extends Generator {
       type: 'editor',
       name: 'description',
       message: 'Description:',
+      default:
+`
+# Please enter the description for your project. Note - lines starting
+# with '#' will be ignored.`,
+      filter: this._removeEditorComments,
     }, {
       type: 'editor',
       name: 'features',
       message: 'Features:',
-      filter: this._parseFeaturesList,
+      default:
+`
+# Please enter the features for your project, one feature per line.
+# Note - lines starting with '#' will be ignored.`,
+      filter: this._removeEditorComments,
     }, {
       type: 'editor',
       name: 'links',
       message: 'Relevant Links:',
+      default:
+`
+# Please enter the links for your project, one 'link_name: url' combo
+# per line. Note - lines starting with '#' will be ignored.`,
       filter: this._parseLinksList,
     },
   ]).then((answers) => {
@@ -86,6 +99,23 @@ You're all set! Your project's static site can be found at:
 `This generator probably isn\'t right for your needs.
 But that\'s none of my business.`;
     this.log(yosay(message));
+  }
+
+  _removeEditorComments(answer) {
+    return new Promise((resolve, reject) => {
+      let actualLines = [];
+      let tmpLinesArr = [];
+      try {
+        // split on newlines - .split('\n')
+        tmpLinesArr = answer.split('\n');
+        tmpLinesArr = tmpLinesArr.map((line) => line.trim());
+        actualLines = 
+          tmpLinesArr.filter((line) => { line && line.charAt(0) !== '#' });
+        resolve(actualLines);
+      } catch (err) {
+        reject(err);
+      }
+    });
   }
 
   _parseFeaturesList(answer) {
