@@ -2,6 +2,15 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 
+removeEditorComments = (answer) => {
+  let tmpLinesArr = [];
+  tmpLinesArr = answer.split('\n');
+  tmpLinesArr = tmpLinesArr.map((line) => line.trim());
+  const actualLines =
+    tmpLinesArr.filter((line) => line && line.charAt(0) !== '#');
+  return actualLines;
+};
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -46,7 +55,7 @@ module.exports = class extends Generator {
 `
 # Please enter the description for your project. Note - lines starting
 # with '#' will be ignored.`,
-      filter: this._removeEditorComments,
+      filter: this._parseDescription,
     }, {
       type: 'editor',
       name: 'features',
@@ -55,7 +64,7 @@ module.exports = class extends Generator {
 `
 # Please enter the features for your project, one feature per line.
 # Note - lines starting with '#' will be ignored.`,
-      filter: this._removeEditorComments,
+      filter: this._parseFeaturesList,
     }, {
       type: 'editor',
       name: 'links',
@@ -101,17 +110,12 @@ But that\'s none of my business.`;
     this.log(yosay(message));
   }
 
-  _removeEditorComments(answer) {
+  _parseDescription(answer) {
     return new Promise((resolve, reject) => {
-      let actualLines = [];
-      let tmpLinesArr = [];
       try {
-        // split on newlines - .split('\n')
-        tmpLinesArr = answer.split('\n');
-        tmpLinesArr = tmpLinesArr.map((line) => line.trim());
-        actualLines = 
-          tmpLinesArr.filter((line) => { line && line.charAt(0) !== '#' });
-        resolve(actualLines);
+        const parsedLines = removeEditorComments(answer);
+        const desc = parsedLines.join(' ');
+        resolve(desc);
       } catch (err) {
         reject(err);
       }
@@ -120,11 +124,8 @@ But that\'s none of my business.`;
 
   _parseFeaturesList(answer) {
     return new Promise((resolve, reject) => {
-      let features = [];
       try {
-        // Split features by newline, removing values that are "null"
-        // refs: https://stackoverflow.com/a/2843625
-        features = answer.split('\n').filter((val) => val);
+        const features = removeEditorComments(answer);
         resolve(features);
       } catch (err) {
         reject(err);
@@ -136,7 +137,7 @@ But that\'s none of my business.`;
     return new Promise((resolve, reject) => {
       let parsedLinks = [];
       try {
-        const linksArr = answer.split('\n').filter((val) => val); // ==> Array ["github: https://github.com", "npm: https://npmjs.com"]
+        const linksArr = removeEditorComments(answer); // ==> Array ["github: https://github.com", "npm: https://npmjs.com"]
         linksArr.forEach((link) => {
           let splitLink = link.split(': '); // ==> Array ["github", "https://github.com"]
           let linkObj = {name: splitLink[0], url: splitLink[1]}; // ==> Object { name: "github", url: "https://github.com" }
